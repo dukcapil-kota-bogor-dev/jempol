@@ -20,6 +20,20 @@
     {{ __('Jempol Bahagia') }}
 </a>
 
+          <a href="{{ route('goes_to_school.index') }}" 
+   class="{{ request()->routeIs('goes_to_school.*') ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700' }} group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-200">
+    <i class="fas fa-school w-5 mr-3 text-lg {{ request()->routeIs('goes_to_school.*') ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-600' }}"></i>
+    {{ __('goes to school') }}
+</a>
+
+<a href="{{ route('lsm.index') }}" 
+   class="{{ request()->routeIs('lsm.*') ? 'bg-indigo-50 text-indigo-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700' }} group flex items-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-200">
+    <span class="relative w-5 mr-3 inline-flex items-center justify-center">
+        <i class="fas fa-sun text-sm {{ request()->routeIs('lsm.*') ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-600' }}"></i>
+        <i class="fas fa-moon text-[10px] absolute -bottom-1 -right-1 {{ request()->routeIs('lsm.*') ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-600' }}"></i>
+    </span>
+    {{ __('LSM') }}
+</a>
         <p class="px-4 text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-2 mt-4">Pengaturan</p>
         
         <a href="{{ route('profile.edit') }}" 

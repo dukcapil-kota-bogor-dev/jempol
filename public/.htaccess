@@ -5,7 +5,7 @@
 
     RewriteEngine On
 
-	RewriteBase /jempol/
+	RewriteBase /
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
