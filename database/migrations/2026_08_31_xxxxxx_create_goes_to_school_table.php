@@ -21,9 +21,9 @@ return new class extends Migration
             $table->integer('kurang_dari_16_tahun')->default(0);
             $table->integer('sudah_punya')->default(0);
             $table->integer('tidak_hadir')->default(0);
+            $table->integer('aktivasi_ikd')->default(0);
             $table->string('foto_1')->nullable();
             $table->string('foto_2')->nullable();
-            $table->enum('status_ikd', ['sudah_aktivasi', 'belum_aktivasi'])->default('belum_aktivasi');
             $table->enum('status_progress', ['proses', 'selesai'])->default('proses');
             $table->timestamps();
         });

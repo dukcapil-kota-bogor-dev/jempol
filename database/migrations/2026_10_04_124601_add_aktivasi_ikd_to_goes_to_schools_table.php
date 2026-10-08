@@ -9,17 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('goes_to_schools', function (Blueprint $table) {
-            $table->enum('status_ikd', [
-                'sudah_aktivasi',
-                'belum_aktivasi'
-            ])->default('belum_aktivasi')->after('foto_2');
+            $table->integer('aktivasi_ikd')->default(0)->after('tidak_hadir');
         });
     }
 
     public function down(): void
     {
         Schema::table('goes_to_schools', function (Blueprint $table) {
-            $table->dropColumn('status_ikd');
+            $table->dropColumn('aktivasi_ikd');
         });
     }
 };

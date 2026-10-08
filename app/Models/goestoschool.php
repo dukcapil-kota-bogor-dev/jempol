@@ -10,7 +10,7 @@ class GoesToSchool extends Model
 
     protected $fillable = [
         'nama_sekolah',
-        'jadwal_pelaksanaan',
+        'rencana_pelaksanaan',
         'jumlah_target',
         'kecamatan',
         'kelurahan',
@@ -22,7 +22,7 @@ class GoesToSchool extends Model
         'tidak_hadir',
         'foto_1',
         'foto_2',
-        'status_ikd',
+        'aktivasi_ikd',
         'status_progress',
     ];
 }
