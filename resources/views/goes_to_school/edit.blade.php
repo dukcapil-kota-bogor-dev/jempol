@@ -13,7 +13,7 @@
                     </h4>
 
                     <p class="text-sm text-gray-500 mt-1">
-                        Lakukan perubahan pada informasi kegiatan Goes To School
+                        Lakukan perubahan pada informasi kegiatan pelayanan perekaman KTP-el di sekolah
                     </p>
 
                 </div>
@@ -45,53 +45,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-6">
 
 
-                        {{-- NAMA SEKOLAH --}}
-
-                        <div class="md:col-span-8">
-
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2 tracking-widest">
-                                Nama Sekolah
-                            </label>
-
-                            <input type="text"
-                                   name="nama_sekolah"
-                                   value="{{ old('nama_sekolah', $goesToSchool->nama_sekolah) }}"
-                                   required
-                                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm uppercase">
-
-                            @error('nama_sekolah')
-                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- RENCANA PELAKSANAAN --}}
-
-                        <div class="md:col-span-4">
-
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2 tracking-widest">
-                                Renacan Pelaksanaan
-                            </label>
-
-                            <input type="text"
-                                name="rencana_pelaksanaan"
-                                value="{{ old('rencana_pelaksanaan', $goesToSchool->rencana_pelaksanaan) }}"
-                                placeholder="Contoh: 08.00 - 12.00"
-                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-
-                            @error('rencana_pelaksanaan')
-                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
-
-                        </div>
-
                         {{-- JUMLAH TARGET --}}
 
                         <div class="md:col-span-4">
 
                             <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
-                                Jumlah Target
+                                Jumlah Target Siswa
                             </label>
 
                             <input type="number"
@@ -195,161 +154,189 @@
                         </div>
 
 
-                        {{-- TEREKAM --}}
+                    </div>
 
-                        <div class="md:col-span-4">
 
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
-                                Terekam
-                            </label>
+                    {{-- HASIL KEGIATAN GOES TO SCHOOL --}}
 
-                            <input type="number"
-                                   name="terekam"
-                                   value="{{ old('terekam', $goesToSchool->terekam) }}"
-                                   min="0"
-                                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                    <div class="mt-8 p-6 bg-indigo-50/30 border border-indigo-100 rounded-xl">
 
-                            @error('terekam')
-                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
+                        <h5 class="text-sm font-bold text-indigo-700 uppercase tracking-widest mb-5">
+                            Hasil Kegiatan
+                        </h5>
+
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+
+                            {{-- TEREKAM --}}
+
+                            <div>
+
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
+                                    Terekam
+                                </label>
+
+                                <input type="number"
+                                       name="terekam"
+                                       value="{{ old('terekam', $goesToSchool->terekam) }}"
+                                       min="0"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+
+                                @error('terekam')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+
+
+                            {{-- GAGAL REKAM --}}
+
+                            <div>
+
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
+                                    Gagal Rekam
+                                </label>
+
+                                <input type="number"
+                                       name="terekam_gagal"
+                                       value="{{ old('terekam_gagal', $goesToSchool->terekam_gagal) }}"
+                                       min="0"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+
+                                @error('terekam_gagal')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+
+
+                            {{-- KURANG DARI 16 TAHUN --}}
+
+                            <div>
+
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
+                                    Kurang dari 16 Tahun
+                                </label>
+
+                                <input type="number"
+                                       name="kurang_dari_16_tahun"
+                                       value="{{ old('kurang_dari_16_tahun', $goesToSchool->kurang_dari_16_tahun) }}"
+                                       min="0"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+
+                                @error('kurang_dari_16_tahun')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+
+
+                            {{-- SUDAH PUNYA KTP --}}
+
+                            <div>
+
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
+                                    Sudah Punya KTP
+                                </label>
+
+                                <input type="number"
+                                       name="sudah_punya"
+                                       value="{{ old('sudah_punya', $goesToSchool->sudah_punya) }}"
+                                       min="0"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+
+                                @error('sudah_punya')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+
+
+                            {{-- TIDAK HADIR --}}
+
+                            <div>
+
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
+                                    Tidak Hadir
+                                </label>
+
+                                <input type="number"
+                                       name="tidak_hadir"
+                                       value="{{ old('tidak_hadir', $goesToSchool->tidak_hadir) }}"
+                                       min="0"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+
+                                @error('tidak_hadir')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+
+
+                            {{-- AKTIVASI IKD --}}
+
+                            <div>
+
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
+                                    Aktivasi IKD
+                                </label>
+
+                                <input type="number"
+                                       name="aktivasi_ikd"
+                                       value="{{ old('aktivasi_ikd', $goesToSchool->aktivasi_ikd ?? 0) }}"
+                                       min="0"
+                                       class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+
+                                @error('aktivasi_ikd')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
+
+                            </div>
+
 
                         </div>
-
-
-                        {{-- TEREKAM GAGAL --}}
-
-                        <div class="md:col-span-4">
-
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
-                                Terekam Gagal
-                            </label>
-
-                            <input type="number"
-                                   name="terekam_gagal"
-                                   value="{{ old('terekam_gagal', $goesToSchool->terekam_gagal) }}"
-                                   min="0"
-                                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-
-                            @error('terekam_gagal')
-                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- KURANG DARI 16 TAHUN --}}
-
-                        <div class="md:col-span-4">
-
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
-                                Kurang Dari 16 Tahun
-                            </label>
-
-                            <input type="number"
-                                   name="kurang_dari_16_tahun"
-                                   value="{{ old('kurang_dari_16_tahun', $goesToSchool->kurang_dari_16_tahun) }}"
-                                   min="0"
-                                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-
-                            @error('kurang_dari_16_tahun')
-                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- SUDAH PUNYA KTP --}}
-
-                        <div class="md:col-span-4">
-
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
-                                Sudah Punya KTP
-                            </label>
-
-                            <input type="number"
-                                   name="sudah_punya"
-                                   value="{{ old('sudah_punya', $goesToSchool->sudah_punya) }}"
-                                   min="0"
-                                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-
-                            @error('sudah_punya')
-                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
-
-                        </div>
-
-
-                        {{-- TIDAK HADIR --}}
-
-                        <div class="md:col-span-4">
-
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
-                                Tidak Hadir
-                            </label>
-
-                            <input type="number"
-                                   name="tidak_hadir"
-                                   value="{{ old('tidak_hadir', $goesToSchool->tidak_hadir) }}"
-                                   min="0"
-                                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-
-                            @error('tidak_hadir')
-                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
-
-                        </div>
-
 
                     </div>
 
 
-                        {{-- AKTIVASI IKD --}}
+                <div class="mt-12 flex items-center justify-end gap-4 border-t border-gray-100 pt-8">
 
-                        <div class="md:col-span-4">
+                    <button type="button"
+                            onclick="window.history.back()"
+                            class="text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors uppercase tracking-widest mr-4">
 
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
-                                Aktivasi IKD
-                            </label>
+                        Batal
 
-                            <input type="number"
-                                   name="aktivasi_ikd"
-                                   value="{{ old('aktivasi_ikd', $goesToSchool->aktivasi_ikd) }}"
-                                   min="0"
-                                   class="w-full rounded-lg border-purple-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-sm">
-
-                            @error('aktivasi_ikd')
-                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                            @enderror
-
-                        </div>
+                    </button>
 
 
-                    </div>
+                {{-- TOMBOL SIMPAN BIASA --}}
+                <button type="submit"
+                        name="action"
+                        value="save"
+                        class="inline-flex items-center px-8 py-3 bg-indigo-600 border border-transparent rounded-xl font-bold text-sm text-white hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-200 transition-all shadow-lg hover:shadow-indigo-200 active:scale-95">
+
+                    <i class="fas fa-save mr-2"></i>
+
+                    Simpan Perubahan
+
+                </button>
 
 
+                {{-- TOMBOL SIMPAN & SELESAIKAN --}}
+                <button type="submit"
+                        name="action"
+                        value="finish"
+                        class="inline-flex items-center px-8 py-3 bg-emerald-600 border border-transparent rounded-xl font-bold text-sm text-white hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-200 transition-all shadow-lg hover:shadow-emerald-200 active:scale-95">
 
-                    <div class="mt-12 flex items-center justify-end gap-4 border-t border-gray-100 pt-8">
+                     <i class="fas fa-check mr-2"></i>
 
-                        <button type="button"
-                                onclick="window.history.back()"
-                                class="text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors uppercase tracking-widest mr-4">
-
-                            Batal
+                        Simpan & Selesaikan
 
                         </button>
 
-
-                        <button type="submit"
-                                class="inline-flex items-center px-8 py-3 bg-indigo-600 border border-transparent rounded-xl font-bold text-sm text-white hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-200 transition-all shadow-lg hover:shadow-indigo-200 active:scale-95">
-
-                            <i class="fas fa-save mr-2"></i>
-
-                            Simpan Perubahan
-
-                        </button>
-
                     </div>
-
 
                 </form>
 
@@ -467,7 +454,7 @@
 
             const initialKec = kecSelect.value;
 
-            const initialKel = "{{ $goesToSchool->kelurahan }}";
+            const initialKel = @json($goesToSchool->kelurahan);
 
 
             if (initialKec && dataWilayah[initialKec]) {

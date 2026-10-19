@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
@@ -79,19 +80,18 @@
                             @endphp
 
                             @foreach($chartData as $label => $count)
-                            <div class="flex items-center justify-between p-1.5 px-3 rounded-lg bg-gray-50 border border-gray-100 hover:bg-indigo-50 transition-all group">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full {{ $colorsPemohon[$label] ?? 'bg-gray-400' }}"></span>
-                                    <span class="text-[11px] font-bold text-gray-600 group-hover:text-indigo-600">{{ $label }}</span>
+                                <div class="flex items-center justify-between p-1.5 px-3 rounded-lg bg-gray-50 border border-gray-100 hover:bg-indigo-50 transition-all group">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full {{ $colorsPemohon[$label] ?? 'bg-gray-400' }}"></span>
+                                        <span class="text-[11px] font-bold text-gray-600 group-hover:text-indigo-600">{{ $label }}</span>
+                                    </div>
+                                    <span class="text-sm font-black text-gray-800">{{ $count }}</span>
                                 </div>
-                                <span class="text-sm font-black text-gray-800">{{ $count }}</span>
-                            </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-
 
             {{-- ================= SECTION 2: GOES TO SCHOOL ================= --}}
             <div>
@@ -104,20 +104,17 @@
                         <div class="h-14 w-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl shadow-sm">
                             <i class="fas fa-users animate-pulse"></i>
                         </div>
-
                         <div>
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Jumlah Goes to School</p>
                             <h3 class="text-3xl font-extrabold text-gray-800">{{ $goestoschool->count() }}</h3>
                         </div>
                     </div>
 
-
                     {{-- Pending --}}
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5 transition-transform hover:scale-105 duration-300">
                         <div class="h-14 w-14 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl shadow-sm">
                             <i class="fas fa-hourglass-half animate-[spin_5s_linear_infinite]"></i>
                         </div>
-
                         <div>
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Pending</p>
                             <h3 class="text-3xl font-extrabold text-gray-800">
@@ -126,13 +123,11 @@
                         </div>
                     </div>
 
-
                     {{-- Selesai --}}
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5 transition-transform hover:scale-105 duration-300">
                         <div class="h-14 w-14 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-2xl shadow-sm">
                             <i class="fas fa-check-double animate-pulse"></i>
                         </div>
-
                         <div>
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Selesai</p>
                             <h3 class="text-3xl font-extrabold text-gray-800">
@@ -141,17 +136,13 @@
                         </div>
                     </div>
 
-
                     {{-- Aktivasi IKD --}}
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5 transition-transform hover:scale-105 duration-300">
                         <div class="h-14 w-14 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-2xl shadow-sm">
                             <i class="fas fa-id-card animate-pulse"></i>
                         </div>
-
                         <div>
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Aktivasi IKD</p>
-
-                            {{-- DIUBAH DARI status_ikd MENJADI aktivasi_ikd --}}
                             <h3 class="text-3xl font-extrabold text-gray-800">
                                 {{ $goestoschool->sum('aktivasi_ikd') }}
                             </h3>
@@ -159,12 +150,9 @@
                     </div>
                 </div>
 
-
                 {{-- Diagram Goes to School --}}
                 @php
                     $chartDataGoesToSchool = $chartDataGoesToSchool ?? [];
-
-                    // Aktivasi IKD dihitung dari kolom aktivasi_ikd
                     $chartDataGoesToSchool['Aktivasi IKD'] = $goestoschool->sum('aktivasi_ikd');
                 @endphp
 
@@ -173,7 +161,6 @@
                         <div class="h-10 w-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg shadow-sm">
                             <i class="fas fa-chart-bar"></i>
                         </div>
-
                         <div>
                             <h3 class="text-lg font-extrabold text-gray-800">Distribusi Kategori</h3>
                             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-tight">
@@ -188,7 +175,6 @@
                         </div>
 
                         <div class="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 gap-1.5">
-
                             @php
                                 $colorsGts = [
                                     'Terekam' => 'bg-blue-500',
@@ -208,18 +194,15 @@
                                             {{ $label }}
                                         </span>
                                     </div>
-
                                     <span class="text-sm font-black text-gray-800">
                                         {{ $count }}
                                     </span>
                                 </div>
                             @endforeach
-
                         </div>
                     </div>
                 </div>
             </div>
-
 
             {{-- ================= SECTION 3: LSM ================= --}}
             <div>
@@ -227,53 +210,70 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
 
+                    {{-- Total LSM --}}
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5 transition-transform hover:scale-105 duration-300">
                         <div class="h-14 w-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl shadow-sm">
                             <i class="fas fa-users animate-pulse"></i>
                         </div>
-
                         <div>
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total LSM</p>
                             <h3 class="text-3xl font-extrabold text-gray-800">{{ $lsm->count() }}</h3>
                         </div>
                     </div>
 
-
+                    {{-- Pending LSM --}}
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5 transition-transform hover:scale-105 duration-300">
                         <div class="h-14 w-14 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl shadow-sm">
                             <i class="fas fa-hourglass-half animate-[spin_5s_linear_infinite]"></i>
                         </div>
-
                         <div>
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Pending</p>
                             <h3 class="text-3xl font-extrabold text-gray-800">
-                                {{ $lsm->where('status', 'pending')->count() }}
+                                {{ $lsm->where('status_progress', 'proses')->count() }}
                             </h3>
                         </div>
                     </div>
 
-
+                    {{-- Selesai LSM --}}
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-5 transition-transform hover:scale-105 duration-300">
                         <div class="h-14 w-14 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-2xl shadow-sm">
                             <i class="fas fa-check-double animate-pulse"></i>
                         </div>
-
                         <div>
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Selesai</p>
                             <h3 class="text-3xl font-extrabold text-gray-800">
-                                {{ $lsm->where('status', 'selesai')->count() }}
+                                {{ $lsm->where('status_progress', 'selesai')->count() }}
                             </h3>
                         </div>
                     </div>
                 </div>
 
+                {{-- Diagram LSM --}}
+                @php
+                    // Hitung langsung dari kolom model LSM agar nama kolom
+                    // dan hasil grafik sesuai dengan data yang tersimpan.
+                    $chartDataLSM = [
+                        'Terekam' => $lsm->sum('terekam'),
+                        'Gagal Rekam' => $lsm->sum('gagal_rekam'),
+                        'Kurang Dari 16 Tahun' => $lsm->sum('kurang_dari_16_tahun'),
+                        'Sudah Memiliki KTP' => $lsm->sum('sudah_memiliki_ktp'),
+                        'Tidak Hadir' => $lsm->sum('tidak_hadir'),
+                    ];
+
+                    $colorsLsm = [
+                        'Terekam' => 'bg-blue-500',
+                        'Gagal Rekam' => 'bg-red-500',
+                        'Kurang Dari 16 Tahun' => 'bg-orange-500',
+                        'Sudah Memiliki KTP' => 'bg-amber-500',
+                        'Tidak Hadir' => 'bg-emerald-500',
+                    ];
+                @endphp
 
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="h-10 w-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg shadow-sm">
                             <i class="fas fa-chart-bar"></i>
                         </div>
-
                         <div>
                             <h3 class="text-lg font-extrabold text-gray-800">Distribusi Kategori</h3>
                             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-tight">
@@ -283,22 +283,11 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-
                         <div class="lg:col-span-8 relative" style="height: 150px;">
                             <canvas id="categoryChartLsm"></canvas>
                         </div>
 
                         <div class="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 gap-1.5">
-
-                            @php
-                                $colorsLsm = [
-                                    'Terekam' => 'bg-blue-500',
-                                    'Gagal Terekam' => 'bg-red-500',
-                                    'Sudah Memiliki KTP' => 'bg-amber-500',
-                                    'Tidak Hadir' => 'bg-emerald-500',
-                                ];
-                            @endphp
-
                             @foreach($chartDataLSM as $label => $count)
                                 <div class="flex items-center justify-between p-1.5 px-3 rounded-lg bg-gray-50 border border-gray-100 hover:bg-indigo-50 transition-all group">
                                     <div class="flex items-center gap-2">
@@ -307,13 +296,11 @@
                                             {{ $label }}
                                         </span>
                                     </div>
-
                                     <span class="text-sm font-black text-gray-800">
                                         {{ $count }}
                                     </span>
                                 </div>
                             @endforeach
-
                         </div>
                     </div>
                 </div>
@@ -321,7 +308,6 @@
 
         </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -422,18 +408,15 @@
                 });
             }
 
-
             buildBarChart(
                 'categoryChartPemohon',
                 {!! json_encode($chartData) !!}
             );
 
-
             buildBarChart(
                 'categoryChartGts',
                 {!! json_encode($chartDataGoesToSchool) !!}
             );
-
 
             buildBarChart(
                 'categoryChartLsm',

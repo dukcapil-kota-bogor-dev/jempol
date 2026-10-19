@@ -49,6 +49,19 @@
         @endif
 
 
+        @if ($errors->any())
+            <div class="mb-4 rounded-lg border border-red-300 bg-red-50 p-4 text-red-700">
+                <p class="font-semibold">Data belum berhasil disimpan:</p>
+
+                <ul class="mt-2 list-inside list-disc">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
         {{-- Error Message --}}
         @if(session('error'))
 

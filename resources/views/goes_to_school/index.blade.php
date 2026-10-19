@@ -47,6 +47,18 @@
         @endif
 
 
+        @if ($errors->any())
+            <div class="mb-4 rounded-lg border border-red-300 bg-red-50 p-4 text-red-700">
+                <p class="font-semibold">Data belum berhasil disimpan:</p>
+                <ul class="mt-2 list-inside list-disc">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
         {{-- Error Message --}}
         @if(session('error'))
             <div
@@ -62,7 +74,7 @@
 
                 <div class="ml-4 mr-8">
                     <p class="text-[10px] font-bold uppercase tracking-widest text-rose-500 leading-none mb-1">
-                        Terekam Gagal
+                        Terjadi Kesalahan
                     </p>
 
                     <p class="text-sm font-semibold text-gray-700 leading-tight">
@@ -101,7 +113,7 @@
                             type="text"
                             name="search"
                             value="{{ request('search') }}"
-                            placeholder="Cari Nama Sekolah atau Tanggal..."
+                            placeholder="Cari Sekolah, Kecamatan, Kelurahan atau Tanggal..."
                             class="pl-10 pr-10 py-2.5 w-full md:w-72 bg-white border border-gray-200 rounded-xl text-sm focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition-all"
                         >
 
@@ -129,6 +141,7 @@
                     </a>
 
                 </div>
+
             </div>
 
 
@@ -142,34 +155,30 @@
                         <thead class="text-[11px] text-gray-400 uppercase bg-gray-50/50 border-b border-gray-100">
 
                             <tr>
-
                                 <th class="px-6 py-4 font-bold">
-                                    Nama Sekolah
+                                    Sekolah & Wilayah
                                 </th>
 
                                 <th class="px-6 py-4 font-bold">
-                                    Wilayah
+                                    Jumlah Target
                                 </th>
 
                                 <th class="px-6 py-4 font-bold">
                                     Hasil Kegiatan
                                 </th>
 
-                                {{-- RENCANA & PELAKSANAAN --}}
+                                {{-- RENCANA + TANGGAL --}}
                                 <th class="px-6 py-4 font-bold">
                                     Rencana & Pelaksanaan
                                 </th>
 
-                                {{-- DOKUMENTASI --}}
                                 <th class="px-6 py-4 font-bold text-center">
                                     Dokumentasi
                                 </th>
 
-                                {{-- AKSI --}}
                                 <th class="px-6 py-4 font-bold text-center">
                                     Aksi
                                 </th>
-
                             </tr>
 
                         </thead>
@@ -184,30 +193,34 @@
                                     x-data="{ openUpdate: false }"
                                 >
 
-                                    {{-- NAMA SEKOLAH --}}
+                                    {{-- SEKOLAH & WILAYAH --}}
                                     <td class="px-6 py-4">
 
-                                        <span class="block font-bold text-gray-800 uppercase leading-tight">
+                                        <div class="text-xs font-bold text-gray-700 uppercase">
                                             {{ $g->nama_sekolah }}
-                                        </span>
+                                        </div>
 
-                                        <span class="block text-[10px] text-gray-400 mt-1">
-                                            Target: {{ $g->jumlah_target }} siswa
-                                        </span>
+                                        <div class="text-xs font-semibold text-gray-500 uppercase mt-1">
+                                            {{ str_replace('_', ' ', $g->kecamatan) }}
+                                        </div>
+
+                                        <div class="text-xs text-gray-400 uppercase mt-1">
+                                            {{ $g->kelurahan }}
+                                        </div>
 
                                     </td>
 
 
-                                    {{-- WILAYAH --}}
+                                    {{-- JUMLAH TARGET --}}
                                     <td class="px-6 py-4">
 
-                                        <div class="text-xs font-semibold text-gray-700 uppercase">
-                                            {{ $g->kelurahan }}
-                                        </div>
+                                        <span class="block font-bold text-gray-800">
+                                            {{ $g->jumlah_target }}
+                                        </span>
 
-                                        <div class="text-xs font-bold text-gray-500 uppercase mb-1">
-                                            {{ str_replace('_', ' ', $g->kecamatan) }}
-                                        </div>
+                                        <span class="block text-[10px] text-gray-400 mt-1">
+                                            Siswa
+                                        </span>
 
                                     </td>
 
@@ -215,29 +228,30 @@
                                     {{-- HASIL KEGIATAN --}}
                                     <td class="px-6 py-4">
 
-                                        <div class="grid grid-cols-2 gap-1 max-w-[220px]">
+                                        <div class="grid grid-cols-2 gap-1 max-w-[240px]">
 
                                             <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded font-semibold">
                                                 Terekam: {{ $g->terekam ?? 0 }}
                                             </span>
 
                                             <span class="text-[10px] bg-red-50 text-red-600 px-2 py-1 rounded font-semibold">
-                                                Terekam Gagal: {{ $g->terekam_gagal ?? 0 }}
+                                                Gagal Rekam: {{ $g->terekam_gagal ?? 0 }}
                                             </span>
 
+                                            {{-- KURANG DARI 16 TAHUN --}}
                                             <span class="text-[10px] bg-orange-50 text-orange-600 px-2 py-1 rounded font-semibold">
                                                 &lt;16 Tahun: {{ $g->kurang_dari_16_tahun ?? 0 }}
                                             </span>
 
                                             <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-1 rounded font-semibold">
-                                                Sudah Punya: {{ $g->sudah_punya ?? 0 }}
+                                                Sudah Punya KTP: {{ $g->sudah_punya ?? 0 }}
                                             </span>
 
                                             <span class="text-[10px] bg-gray-50 text-gray-600 px-2 py-1 rounded font-semibold">
                                                 Tidak Hadir: {{ $g->tidak_hadir ?? 0 }}
                                             </span>
 
-                                            <span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-1 rounded font-semibold">
+                                            <span class="text-[10px] bg-violet-50 text-violet-600 px-2 py-1 rounded font-semibold">
                                                 Aktivasi IKD: {{ $g->aktivasi_ikd ?? 0 }}
                                             </span>
 
@@ -246,44 +260,44 @@
                                     </td>
 
 
-                                    {{-- RENCANA & PELAKSANAAN --}}
+                                    {{-- RENCANA & TANGGAL PELAKSANAAN --}}
                                     <td class="px-6 py-4">
 
-                                        {{-- RENCANA --}}
-                                        <div class="flex items-center gap-2 mb-2">
+                                        <div class="space-y-3">
 
-                                            <div class="w-8 h-8 flex items-center justify-center bg-amber-50 text-amber-600 rounded-lg">
-                                                <i class="fas fa-calendar-check text-xs"></i>
+                                            {{-- RENCANA PELAKSANAAN --}}
+                                            <div class="flex items-center gap-2">
+
+                                                <div class="w-8 h-8 flex items-center justify-center bg-amber-50 text-amber-600 rounded-lg">
+                                                    <i class="fas fa-calendar-check text-xs"></i>
+                                                </div>
+
+                                                <div>
+
+                                                    @if($g->rencana_pelaksanaan)
+
+                                                        <span class="block text-xs font-bold text-gray-700">
+                                                            {{ $g->rencana_pelaksanaan }}
+                                                        </span>
+
+                                                        <span class="block text-[10px] text-amber-500">
+                                                            Rencana Pelaksanaan
+                                                        </span>
+
+                                                    @else
+
+                                                        <span class="block text-xs text-gray-400">
+                                                            Belum ada rencana
+                                                        </span>
+
+                                                    @endif
+
+                                                </div>
+
                                             </div>
 
-                                            <div>
 
-                                                @if($g->jadwal_pelaksanaan)
-
-                                                    <span class="block text-xs font-semibold text-gray-600">
-                                                        {{ $g->jadwal_pelaksanaan }}
-                                                    </span>
-
-                                                    <span class="block text-[10px] text-gray-400">
-                                                        Rencana
-                                                    </span>
-
-                                                @else
-
-                                                    <span class="block text-xs text-gray-400">
-                                                        Belum ada rencana
-                                                    </span>
-
-                                                @endif
-
-                                            </div>
-
-                                        </div>
-
-
-                                        {{-- TANGGAL PELAKSANAAN --}}
-                                        @if($g->tanggal_pelaksanaan)
-
+                                            {{-- TANGGAL PELAKSANAAN --}}
                                             <div class="flex items-center gap-2">
 
                                                 <div class="w-8 h-8 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-lg">
@@ -292,33 +306,47 @@
 
                                                 <div>
 
-                                                    <span class="block text-xs font-bold text-gray-700">
-                                                        {{ \Carbon\Carbon::parse($g->tanggal_pelaksanaan)->format('d/m/Y') }}
-                                                    </span>
+                                                    @if($g->tanggal_pelaksanaan)
 
-                                                    <span class="block text-[10px] text-indigo-500">
-                                                        Tanggal Pelaksanaan
-                                                    </span>
+                                                        <span class="block text-xs font-bold text-gray-700">
+                                                            {{ \Carbon\Carbon::parse($g->tanggal_pelaksanaan)->format('d/m/Y') }}
+                                                        </span>
+
+                                                        <span class="block text-[10px] text-indigo-500">
+                                                            Tanggal Pelaksanaan
+                                                        </span>
+
+                                                    @else
+
+                                                        <span class="block text-[10px] text-gray-400">
+                                                            Belum dilaksanakan
+                                                        </span>
+
+                                                    @endif
 
                                                 </div>
 
                                             </div>
 
-                                        @else
 
-                                            <div class="flex items-center gap-2">
+                                            {{-- STATUS --}}
+                                            @if($g->status_progress === 'proses')
 
-                                                <div class="w-8 h-8 flex items-center justify-center bg-gray-50 text-gray-400 rounded-lg">
-                                                    <i class="fas fa-calendar-alt text-xs"></i>
-                                                </div>
-
-                                                <span class="text-xs text-gray-400">
-                                                    Belum ada tanggal pelaksanaan
+                                                <span class="inline-flex items-center px-2 py-1 rounded-full bg-amber-50 text-amber-600 text-[9px] font-bold uppercase">
+                                                    <i class="fas fa-clock mr-1"></i>
+                                                    Proses
                                                 </span>
 
-                                            </div>
+                                            @else
 
-                                        @endif
+                                                <span class="inline-flex items-center px-2 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[9px] font-bold uppercase">
+                                                    <i class="fas fa-check-circle mr-1"></i>
+                                                    Selesai
+                                                </span>
+
+                                            @endif
+
+                                        </div>
 
                                     </td>
 
@@ -334,6 +362,7 @@
                                                     @click="imgModal = true; imgModalSrc = '{{ asset('storage/' . $g->foto_1) }}'"
                                                     src="{{ asset('storage/' . $g->foto_1) }}"
                                                     class="h-9 w-9 rounded-full ring-2 ring-white object-cover cursor-zoom-in hover:scale-110 shadow-sm transition-transform"
+                                                    alt="Dokumentasi 1"
                                                 >
 
                                             @endif
@@ -345,6 +374,7 @@
                                                     @click="imgModal = true; imgModalSrc = '{{ asset('storage/' . $g->foto_2) }}'"
                                                     src="{{ asset('storage/' . $g->foto_2) }}"
                                                     class="h-9 w-9 rounded-full ring-2 ring-white object-cover cursor-zoom-in hover:scale-110 shadow-sm transition-transform"
+                                                    alt="Dokumentasi 2"
                                                 >
 
                                             @endif
@@ -413,7 +443,7 @@
                                             {{-- DELETE --}}
                                             <button
                                                 type="button"
-                                                @click="deleteModal = true; deleteAction = '{{ route('goes_to_school.destroy', $g->id) }}'; deleteNama = '{{ $g->nama_sekolah }}'"
+                                                @click="deleteModal = true; deleteAction = '{{ route('goes_to_school.destroy', $g->id) }}'; deleteNama = '{{ addslashes($g->nama_sekolah) }}'"
                                                 title="Hapus Data"
                                                 class="w-8 h-8 flex items-center justify-center bg-rose-50 text-rose-500 rounded-lg hover:bg-rose-500 hover:text-white transition-all shadow-sm"
                                             >
@@ -423,7 +453,7 @@
                                         </div>
 
 
-                                        {{-- Modal Update Progress --}}
+                                        {{-- MODAL UPDATE PROGRESS --}}
                                         <template x-if="openUpdate">
 
                                             <div class="fixed inset-0 z-[60] overflow-y-auto text-left">
@@ -442,7 +472,7 @@
                                                         <div class="bg-emerald-600 px-6 py-4 flex justify-between items-center text-white">
 
                                                             <h3 class="text-lg font-bold">
-                                                                Penyelesaian Goes To School
+                                                                Penyelesaian Kegiatan Goes To School
                                                             </h3>
 
                                                             <button
@@ -463,6 +493,7 @@
                                                         >
 
                                                             @csrf
+
                                                             @method('PUT')
 
 
@@ -474,88 +505,26 @@
                                                                 </h6>
 
                                                                 <p class="text-xs text-gray-400">
-                                                                    Target: {{ $g->jumlah_target }} siswa
+                                                                    {{ $g->kelurahan }}, {{ $g->kecamatan }}
                                                                 </p>
 
                                                             </div>
 
 
-                                                            {{-- Tanggal & Rencana --}}
-                                                            <div class="grid grid-cols-2 gap-4">
+                                                            {{-- Tanggal Pelaksanaan --}}
+                                                            <div>
 
-                                                                {{-- Tanggal Pelaksanaan --}}
-                                                                <div>
+                                                                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">
+                                                                    Tanggal Pelaksanaan
+                                                                </label>
 
-                                                                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">
-                                                                        Tanggal Pelaksanaan
-                                                                    </label>
-
-                                                                    <input
-                                                                        type="date"
-                                                                        name="tanggal_pelaksanaan"
-                                                                        value="{{ $g->tanggal_pelaksanaan }}"
-                                                                        class="w-full border-gray-300 rounded-lg text-sm focus:ring-emerald-500"
-                                                                        required
-                                                                    >
-
-                                                                </div>
-
-
-                                                                {{-- Rencana Pelaksanaan --}}
-                                                                <div>
-
-                                                                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">
-                                                                        Rencana Pelaksanaan
-                                                                    </label>
-
-                                                                    <input
-                                                                        type="text"
-                                                                        name="jadwal_pelaksanaan"
-                                                                        value="{{ $g->jadwal_pelaksanaan }}"
-                                                                        placeholder="Contoh: 08.00 - 12.00"
-                                                                        class="w-full border-gray-300 rounded-lg text-sm focus:ring-emerald-500"
-                                                                    >
-
-                                                                </div>
-
-                                                            </div>
-
-
-                                                            {{-- Wilayah --}}
-                                                            <div class="grid grid-cols-2 gap-4">
-
-                                                                <div>
-
-                                                                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">
-                                                                        Kecamatan
-                                                                    </label>
-
-                                                                    <input
-                                                                        type="text"
-                                                                        name="kecamatan"
-                                                                        value="{{ $g->kecamatan }}"
-                                                                        class="w-full border-gray-300 rounded-lg text-sm"
-                                                                        required
-                                                                    >
-
-                                                                </div>
-
-
-                                                                <div>
-
-                                                                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">
-                                                                        Kelurahan
-                                                                    </label>
-
-                                                                    <input
-                                                                        type="text"
-                                                                        name="kelurahan"
-                                                                        value="{{ $g->kelurahan }}"
-                                                                        class="w-full border-gray-300 rounded-lg text-sm"
-                                                                        required
-                                                                    >
-
-                                                                </div>
+                                                                <input
+                                                                    type="date"
+                                                                    name="tanggal_pelaksanaan"
+                                                                    value="{{ $g->tanggal_pelaksanaan }}"
+                                                                    class="w-full border-gray-300 rounded-lg text-sm focus:ring-emerald-500"
+                                                                    required
+                                                                >
 
                                                             </div>
 
@@ -587,11 +556,11 @@
                                                                     </div>
 
 
-                                                                    {{-- TEREKAM GAGAL --}}
+                                                                    {{-- GAGAL REKAM --}}
                                                                     <div>
 
                                                                         <label class="block text-[10px] font-semibold text-red-600 mb-1">
-                                                                            Terekam Gagal
+                                                                            Gagal Rekam
                                                                         </label>
 
                                                                         <input
@@ -609,7 +578,7 @@
                                                                     <div>
 
                                                                         <label class="block text-[10px] font-semibold text-orange-600 mb-1">
-                                                                            &lt;16 Tahun
+                                                                            Kurang dari 16 Tahun
                                                                         </label>
 
                                                                         <input
@@ -662,7 +631,7 @@
                                                                     {{-- AKTIVASI IKD --}}
                                                                     <div>
 
-                                                                        <label class="block text-[10px] font-semibold text-purple-600 mb-1">
+                                                                        <label class="block text-[10px] font-semibold text-violet-600 mb-1">
                                                                             Aktivasi IKD
                                                                         </label>
 
@@ -671,7 +640,7 @@
                                                                             name="aktivasi_ikd"
                                                                             value="{{ $g->aktivasi_ikd ?? 0 }}"
                                                                             min="0"
-                                                                            class="w-full border-purple-300 rounded-lg text-sm focus:ring-purple-500 focus:border-purple-500"
+                                                                            class="w-full border-gray-300 rounded-lg text-sm focus:ring-violet-500 focus:border-violet-500"
                                                                         >
 
                                                                     </div>
@@ -688,14 +657,12 @@
                                                                     Dokumentasi
                                                                 </p>
 
-
                                                                 <input
                                                                     type="file"
                                                                     name="foto_1"
                                                                     class="block w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-emerald-50 file:text-emerald-700"
                                                                     accept="image/*"
                                                                 >
-
 
                                                                 <input
                                                                     type="file"
@@ -718,12 +685,13 @@
                                                                     BATAL
                                                                 </button>
 
-
                                                                 <button
                                                                     type="submit"
+                                                                    name="action"
+                                                                    value="finish"
                                                                     class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-md active:scale-95 transition-all"
                                                                 >
-                                                                    SIMPAN PERUBAHAN
+                                                                    SIMPAN & SELESAIKAN
                                                                 </button>
 
                                                             </div>
@@ -754,15 +722,12 @@
                                             <i class="fas fa-school text-gray-200 text-5xl mb-4"></i>
 
                                             <p class="text-gray-400 font-medium">
-
                                                 {{
                                                     request('search')
                                                         ? 'Pencarian "' . request('search') . '" tidak ditemukan.'
                                                         : 'Belum ada data Goes To School yang terdaftar.'
                                                 }}
-
                                             </p>
-
 
                                             @if(request('search'))
 
@@ -810,6 +775,7 @@
             <img
                 :src="imgModalSrc"
                 class="max-h-full max-w-full rounded shadow-2xl border border-white/10"
+                alt="Pratinjau dokumentasi"
             >
 
         </div>
@@ -839,16 +805,13 @@
                             <i class="fas fa-trash-alt text-3xl text-rose-500"></i>
                         </div>
 
-
                         <h3 class="text-xl font-bold text-gray-800 mb-2">
                             Hapus Data?
                         </h3>
 
-
                         <p class="text-sm text-gray-500">
-                            Menghapus data sekolah:
+                            Menghapus data Goes To School:
                         </p>
-
 
                         <p
                             class="text-sm font-bold text-gray-700 mb-8 uppercase"
@@ -861,6 +824,7 @@
                             <form :action="deleteAction" method="POST">
 
                                 @csrf
+
                                 @method('DELETE')
 
                                 <button

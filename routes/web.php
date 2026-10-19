@@ -66,18 +66,31 @@ Route::get('/dashboard', function () {
         'Aktivasi IKD'           => $goestoschool->sum('aktivasi ikd'),
     ];
 
-    // =========================
+        // =========================
     // DATA LSM
     // =========================
-    $lsm = lsm::latest()->get();
+    $lsm = Lsm::latest()->get();
 
- // Statistik LSM
+    // Statistik LSM
+    $totalLsm = Lsm::count();
+
+    $pendingLsm = Lsm::where(
+        'status_progress',
+        'proses'
+    )->count();
+
+    $selesaiLsm = Lsm::where(
+        'status_progress',
+        'selesai'
+    )->count();
+
     $chartDataLSM = [
-        'Terekam'         => $lsm->sum('terekam'),
-        'Gagal Rekam'   => $lsm->sum('Rekam_gagal'),
-        'Sudah Punya KTP' => $lsm->sum('sudah_punya'),
-        'Tidak Hadir'     => $lsm->sum('tidak_hadir'),
-    ];    
+        'Terekam' => $lsm->sum('terekam'),
+        'Gagal Rekam' => $lsm->sum('gagal_rekam'),
+        'Kurang Dari 16 Tahun' => $lsm->sum('kurang_dari_16_tahun'),
+        'Sudah Punya KTP' => $lsm->sum('sudah_memiliki_ktp'),
+        'Tidak Hadir' => $lsm->sum('tidak_hadir'),
+    ];
 
     // =========================
     // KIRIM SEMUA DATA
@@ -89,6 +102,9 @@ Route::get('/dashboard', function () {
         'goestoschool',
         'chartDataGoesToSchool',
         'lsm',
+        'totalLsm',
+        'pendingLsm',
+        'selesaiLsm',
         'chartDataLSM'
     ));
 
@@ -145,11 +161,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // =========================
 
     // Download DOCX LSM
-    Route::get('/lsm/download/{id}', [lsmController::class, 'downloadDocx'])
+    Route::get('/lsm/download/{id}', [LsmController::class, 'downloadDocx'])
         ->name('lsm.download');
 
     // CRUD LSM
-    Route::resource('lsm', lsmController::class)->except(['show']);
+    Route::resource('lsm', LsmController::class)->except(['show']);
 
 });
 

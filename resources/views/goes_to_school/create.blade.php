@@ -8,11 +8,11 @@
 
                 <div>
                     <h4 class="text-2xl font-bold text-gray-800 tracking-tight">
-                        Formulir Pendaftaran GOES TO SCHOOL
+                        Formulir Pendaftaran Goes To School
                     </h4>
 
                     <p class="text-sm text-gray-500 mt-1">
-                        Input data kegiatan Goes To School dan hasil perekaman KTP-el.
+                        Input data kegiatan pelayanan perekaman KTP-el di sekolah.
                     </p>
                 </div>
 
@@ -31,17 +31,15 @@
 
                 <form action="{{ route('goes_to_school.store') }}"
                       method="POST"
-                      enctype="multipart/form-data"
                       class="p-6 md:p-10">
 
                     @csrf
 
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
 
                         {{-- NAMA SEKOLAH --}}
-                        <div class="md:col-span-8">
+                        <div>
 
                             <label class="block text-xs font-bold uppercase text-gray-500 mb-2 tracking-widest">
                                 Nama Sekolah
@@ -52,10 +50,11 @@
                                 name="nama_sekolah"
                                 value="{{ old('nama_sekolah') }}"
                                 required
-                                placeholder="Contoh: SMA Negeri 1 Bogor"
-                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm uppercase"
+                                oninput="this.value = this.value.toUpperCase()"
+                                placeholder="Masukkan nama sekolah"
+                                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             >
-
+                            
                             @error('nama_sekolah')
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                             @enderror
@@ -63,18 +62,19 @@
                         </div>
 
 
+
                         {{-- RENCANA PELAKSANAAN --}}
-                        <div class="md:col-span-4">
+                        <div>
 
                             <label class="block text-xs font-bold uppercase text-gray-500 mb-2 tracking-widest">
                                 Rencana Pelaksanaan
                             </label>
 
                             <input
-                                type="text"
+                                type="date"
                                 name="rencana_pelaksanaan"
-                                value="{{ old('rencana_pelaksanaan') }}"
-                                placeholder="Contoh: 08.00 - 12.00"
+                                value="{{ old('rencana_pelaksanaan', date('Y-m-d')) }}"
+                                required
                                 class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
                             >
 
@@ -86,10 +86,10 @@
 
 
                         {{-- JUMLAH TARGET --}}
-                        <div class="md:col-span-4">
+                        <div>
 
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
-                                Jumlah Target
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2 tracking-widest">
+                                Jumlah Target Siswa
                             </label>
 
                             <input
@@ -110,9 +110,9 @@
 
 
                         {{-- KECAMATAN --}}
-                        <div class="md:col-span-4">
+                        <div>
 
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2 tracking-widest">
                                 Kecamatan
                             </label>
 
@@ -143,9 +143,9 @@
 
 
                         {{-- KELURAHAN --}}
-                        <div class="md:col-span-4">
+                        <div>
 
-                            <label class="block text-xs font-bold text-gray-500 mb-2 uppercase">
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2 tracking-widest">
                                 Kelurahan
                             </label>
 
@@ -168,6 +168,7 @@
                             @enderror
 
                         </div>
+
 
                     </div>
 
@@ -203,95 +204,19 @@
             const kelSelect = document.getElementById('kelurahan');
 
             const dataWilayah = {
-                "Bogor Barat": [
-                    "Balungbangjaya",
-                    "Bubulak",
-                    "Cilendek Barat",
-                    "Cilendek Timur",
-                    "Curug",
-                    "Curugmekar",
-                    "Gunungbatu",
-                    "Loji",
-                    "Margajaya",
-                    "Menteng",
-                    "Pasirjaya",
-                    "Pasirkuda",
-                    "Pasirmulya",
-                    "Semplak",
-                    "Sindangbarang",
-                    "Situgede"
-                ],
+                "Bogor Barat": ["Balungbangjaya", "Bubulak", "Cilendek Barat", "Cilendek Timur", "Curug", "Curugmekar", "Gunungbatu", "Loji", "Margajaya", "Menteng", "Pasirjaya", "Pasirkuda", "Pasirmulya", "Semplak", "Sindangbarang", "Situgede"],
 
-                "Bogor Selatan": [
-                    "Batutulis",
-                    "Bojongkerta",
-                    "Bondongan",
-                    "Cikaret",
-                    "Cipaku",
-                    "Empang",
-                    "Genteng",
-                    "Harjasari",
-                    "Kertamaya",
-                    "Lawanggintung",
-                    "Muarasari",
-                    "Mulyaharja",
-                    "Pakuan",
-                    "Pamoyanan",
-                    "Rancamaya",
-                    "Ranggamekar"
-                ],
+                "Bogor Selatan": ["Batutulis", "Bojongkerta", "Bondongan", "Cikaret", "Cipaku", "Empang", "Genteng", "Harjasari", "Kertamaya", "Lawanggintung", "Muarasari", "Mulyaharja", "Pakuan", "Pamoyanan", "Rancamaya", "Ranggamekar"],
 
-                "Bogor Tengah": [
-                    "Babakan",
-                    "Babakan Pasar",
-                    "Cibogor",
-                    "Ciwaringin",
-                    "Gudang",
-                    "Kebon Kalapa",
-                    "Pabaton",
-                    "Paledang",
-                    "Panaragan",
-                    "Sempur",
-                    "Tegallega"
-                ],
+                "Bogor Tengah": ["Babakan", "Babakan Pasar", "Cibogor", "Ciwaringin", "Gudang", "Kebon Kalapa", "Pabaton", "Paledang", "Panaragan", "Sempur", "Tegallega"],
 
-                "Bogor Timur": [
-                    "Baranangsiang",
-                    "Katulampa",
-                    "Sindangrasa",
-                    "Sindangsari",
-                    "Sukasari",
-                    "Tajur"
-                ],
+                "Bogor Timur": ["Baranangsiang", "Katulampa", "Sindangrasa", "Sindangsari", "Sukasari", "Tajur"],
 
-                "Bogor Utara": [
-                    "Bantarjati",
-                    "Cibuluh",
-                    "Ciluar",
-                    "Cimahpar",
-                    "Ciparigi",
-                    "Kedunghalang",
-                    "Tanahbaru",
-                    "Tegal Gundil"
-                ],
+                "Bogor Utara": ["Bantarjati", "Cibuluh", "Ciluar", "Cimahpar", "Ciparigi", "Kedunghalang", "Tanahbaru", "Tegal Gundil"],
 
-                "Tanah Sareal": [
-                    "Cibadak",
-                    "Kayumanis",
-                    "Kebon Pedes",
-                    "Kedung Badak",
-                    "Kedung Jaya",
-                    "Kedung Waringin",
-                    "Kencana",
-                    "Mekarwangi",
-                    "Sukadamai",
-                    "Sukaresmi",
-                    "Tanah Sareal"
-                ],
+                "Tanah Sareal": ["Cibadak", "Kayumanis", "Kebon Pedes", "Kedung Badak", "Kedung Jaya", "Kedung Waringin", "Kencana", "Mekarwangi", "Sukadamai", "Sukaresmi", "Tanah Sareal"],
 
-                "Luar Domisili": [
-                    "Luar Domisili"
-                ]
+                "Luar Domisili": ["Luar Domisili"]
             };
 
 
@@ -306,18 +231,16 @@
 
                     kelSelect.disabled = false;
 
-                    dataWilayah[selectedKec]
-                        .sort()
-                        .forEach(function(kel) {
+                    dataWilayah[selectedKec].sort().forEach(function(kel) {
 
-                            const opt = document.createElement('option');
+                        const opt = document.createElement('option');
 
-                            opt.value = kel;
-                            opt.textContent = kel;
+                        opt.value = kel;
+                        opt.textContent = kel;
 
-                            kelSelect.appendChild(opt);
+                        kelSelect.appendChild(opt);
 
-                        });
+                    });
 
                 } else {
 
